@@ -1,6 +1,4 @@
-import Button from "../button";
-
-export default function InputCalculateFee() {
+export default function FormCalculateFee() {
   return (
     <form className="text-center w-full mb-24">
       <h2 className="text-primary1 text-6 font-bold">Valor Desejado</h2>
@@ -13,7 +11,9 @@ export default function InputCalculateFee() {
           autoComplete="off"
         />
 
-        <Button text="Calcular" theme="orange" isSubmit />
+        <button className="btn btn-md btn-secondary" type="submit">
+          Calcular
+        </button>
       </div>
     </form>
   );

@@ -4,9 +4,50 @@
 
 :root {
   font-size: 10px;
-  
 }
 
 body {
   font-size: 1.6rem;
+}
+
+@layer components {
+  .input-creditCard {
+    @apply w-full bg-backGround text-[1.8rem] text-font font-bold italic rounded-l-lg p-8 focus:outline-none;
+  }
+
+  .btn {
+    @apply text-whiteFixed font-bold flex justify-center gap-8 rounded-lg duration-200 disabled:opacity-40;
+  }
+
+  .btn-md {
+    @apply w-[12rem] flex items-center py-2 text-1;
+  }
+
+  .btn-lg {
+    @apply w-[39rem] flex items-center py-8 text-5;
+  }
+
+  .btn-primary {
+    @apply bg-primary1 hover:bg-primary2;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary1 hover:bg-secondary2;
+  }
+
+  .status-tag {
+    @apply w-[28rem] flex justify-center items-center gap-6 py-4 text-whiteFixed rounded-lg;
+  }
+
+  .status-waiting {
+    @apply bg-secondary1;
+  }
+
+  .status-success {
+    @apply bg-primary1;
+  }
+
+  .status-warning {
+    @apply bg-[#bc3434];
+  }
 }

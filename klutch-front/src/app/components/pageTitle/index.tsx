@@ -5,10 +5,10 @@ interface IPageTitle {
   hasIcon?: boolean;
 }
 
-export default function PageTitle({ text, hasIcon }: IPageTitle) {
+export default function PageTitle(props: IPageTitle) {
   return (
     <div className="flex gap-8 my-24">
-      {hasIcon && (
+      {props.hasIcon && (
         <Image src="Grupo 270.svg" alt="Saiba mais" width={60} height={0} />
       )}
 
@@ -20,7 +20,7 @@ export default function PageTitle({ text, hasIcon }: IPageTitle) {
       />
 
       <h1 className="text-primary1 font-bold text-7 w-[30rem] leading-[6rem]">
-        {text}
+        {props.text}
       </h1>
     </div>
   );

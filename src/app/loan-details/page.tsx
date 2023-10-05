@@ -1,9 +1,10 @@
-import Header from "@/app/components/header";
-import PageTitle from "@/app/components/pageTitle";
-import IconDocument from "../components/icons/iconDocument";
 import Link from "next/link";
-import IconCard from "../components/icons/iconCard";
-import IconCircleCheck from "../components/icons/iconCircleCheck";
+
+import Header from "@/components/header";
+import IconCard from "@/components/icons/iconCard";
+import IconCircleCheck from "@/components/icons/iconCircleCheck";
+import IconDocument from "@/components/icons/iconDocument";
+import PageTitle from "@/components/pageTitle";
 
 export default function LoandDetails() {
   return (

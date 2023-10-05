@@ -62,6 +62,14 @@ export default function FormLoan() {
             </label>
           </div>
 
+          <label className="absolute translate-y-[-20rem] w-[45rem] flex items-center justify-between self-end p-6 text-primary1 text-1 font-bold italic rounded-lg bg-backGround">
+            Tabela:
+            <select className="w-[65%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none">
+              <option value="Tabela Padrão 1">Tabela Padrão 1</option>
+              <option value="Tabela Padrão 2">Tabela Padrão 2</option>
+            </select>
+          </label>
+
           <button className="btn btn-lg btn-primary w-full" type="submit">
             <IconCheck fill="#fff" />
             Concluir

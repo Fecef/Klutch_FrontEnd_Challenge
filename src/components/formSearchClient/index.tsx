@@ -1,5 +1,3 @@
-import Button from "../button";
-
 export default function FormSearchClient() {
   return (
     <form className="text-center mb-24">

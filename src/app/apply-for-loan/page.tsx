@@ -1,12 +1,12 @@
-import FormCreditCard from "../components/formCreditCard";
-import Header from "../components/header";
-import FormSearchClient from "../components/formSearchClient";
-import PageTitle from "../components/pageTitle";
-import SearchClientResult from "../components/searchClientResult";
-import LoanChoices from "../components/loanChoices";
-import FormLoan from "../components/formLoan";
-import TableFees from "../components/tableFees";
-import LoanSummary from "../components/loanSummary";
+import FormCreditCard from "@/components/formCreditCard";
+import FormLoan from "@/components/formLoan";
+import FormSearchClient from "@/components/formSearchClient";
+import Header from "@/components/header";
+import LoanChoices from "@/components/loanChoices";
+import LoanSummary from "@/components/loanSummary";
+import PageTitle from "@/components/pageTitle";
+import SearchClientResult from "@/components/searchClientResult";
+
 
 export default function ApplyForLoan() {
   return (

@@ -1,7 +1,7 @@
-import FormCalculateFee from "./components/formCalculateFee";
-import TableFees from "./components/tableFees";
-import Header from "./components/header";
-import PageTitle from "./components/pageTitle";
+import FormCalculateFee from "../components/formCalculateFee";
+import TableFees from "../components/tableFees";
+import Header from "../components/header";
+import PageTitle from "../components/pageTitle";
 
 export default function Home() {
   return (

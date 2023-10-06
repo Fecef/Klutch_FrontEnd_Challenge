@@ -14,7 +14,7 @@ export function LoanSimulationProvider({ children }: IProviderProps) {
   const installments = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const handleDesiredValue = (value: number) => {
-    if (value < 300 || value > 10000) {
+    if (value <= 300 || value >= 10000) {
       setDesiredValue(0)
       setHiddenTables(true);
     } else {

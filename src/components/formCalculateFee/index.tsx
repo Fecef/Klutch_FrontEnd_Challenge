@@ -1,6 +1,6 @@
 "use client";
 
-import { LoanSimulationContext } from "@/contexts/loanSimulation.context";
+import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 

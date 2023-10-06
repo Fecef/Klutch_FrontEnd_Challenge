@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 
 import TableSelectBtn from "../tableSelectBtn";
 import TableSelectResult from "../tableSelectResult";
-import { LoanSimulationContext } from "@/contexts/loanSimulation.context";
+import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
 import { CastBRL } from "@/utils/castBrl";
 
 

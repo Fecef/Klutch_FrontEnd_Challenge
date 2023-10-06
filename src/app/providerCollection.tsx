@@ -1,7 +1,7 @@
 "use client";
 
 import { LoanApplicationProvider } from "@/contexts/loanApplication.contex";
-import { LoanSimulationProvider } from "@/contexts/loanSimulation.context";
+import { LoanSimulationProvider } from "@/contexts/loanSimulate.context";
 
 export default function ProviderCollection({ children }: IProviderProps) {
     return (

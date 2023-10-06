@@ -4,9 +4,60 @@ interface IProviderProps {
 
 interface ILoanSimulationProvider {
   handleDesiredValue: (data: number) => void;
+  buildTablesList: () => void;
+  changeTableDefault: (tableName: string) => void;
   desiredValue: number;
   hiddenTables: boolean;
   tablesList: ITablesList[];
+  tableDefault: ITablesList[];
+}
+
+interface ILoanApplicationProvider {
+  getClient: (cpf: string) => void;
+  saveCardData: (data: ICreditCard) => void;
+  saveLoanData: (data: ILoan) => void;
+  stepFoward: () => void;
+  clientData: IClient | undefined;
+  cardData: ICreditCard | undefined;
+  loanData: ILoan | undefined;
+  step: number;
+}
+
+interface IClient {
+  id: string;
+  name: string;
+  phone: string;
+  cpf: string;
+  bank: IBank;
+}
+
+interface ISearchCpf {
+  cpf: string;
+}
+
+interface ICreditCard {
+  owner: string;
+  number: string;
+  validity: string;
+  cvc: string;
+}
+
+interface ILoan {
+  tableName: string;
+  tableRate: number;
+  installments: number;
+  installmentTotalValue: number;
+  loanValue: number;
+  loanTotalValue: number;
+  stream: string;
+}
+
+interface IBank {
+  id: string;
+  name: string;
+  type: string;
+  agency: string;
+  number: string;
 }
 
 interface ITableRate {
@@ -17,8 +68,17 @@ interface ITableRate {
 }
 
 interface ITablesList {
+  id: string;
   tableName: string;
+  tableRate: number;
   installments: IInstallments[];
+}
+
+interface ITable {
+  tablesList: ITablesList[];
+  alwaysShow?: boolean;
+  hasButton?: boolean;
+  hasFooter?: boolean;
 }
 
 interface IInstallments {

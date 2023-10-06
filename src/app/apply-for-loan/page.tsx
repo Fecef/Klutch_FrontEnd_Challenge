@@ -1,3 +1,7 @@
+"use client"
+
+import { useContext } from "react";
+
 import FormCreditCard from "@/components/formCreditCard";
 import FormLoan from "@/components/formLoan";
 import FormSearchClient from "@/components/formSearchClient";
@@ -6,9 +10,11 @@ import LoanChoices from "@/components/loanChoices";
 import LoanSummary from "@/components/loanSummary";
 import PageTitle from "@/components/pageTitle";
 import SearchClientResult from "@/components/searchClientResult";
-
+import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
 
 export default function ApplyForLoan() {
+  const { step } = useContext(LoanApplicationContext)
+
   return (
     <>
       <Header />
@@ -16,23 +22,26 @@ export default function ApplyForLoan() {
         <PageTitle text="Solicitar Empréstimo" hasIcon />
 
         <section className="flex flex-col items-center py-12">
-          {/* 1ª Etapa */}
-          {/* <div className="w-[47rem]">
+          <div hidden={step !== 1} className="w-[47rem]">
             <FormSearchClient />
             <SearchClientResult />
-          </div> */}
+          </div>
 
-          {/* 2ª Etapa */}
-          {/* <FormCreditCard /> */}
+          <div hidden={step !== 2}>
+            <FormCreditCard />
+          </div>
 
-          {/* 3ª Etapa */}
-          {/* <LoanChoices /> */}
+          <div hidden={step !== 3}>
+            <LoanChoices />
+          </div>
 
-          {/* 4ª Etapa */}
-          {/* <FormLoan /> */}
+          <div hidden={step !== 4}>
+            <FormLoan />
+          </div>
 
-          {/* 5ª Etapa */}
-          {/* <LoanSummary /> */}
+          <div hidden={step !== 5}>
+            <LoanSummary />
+          </div>
         </section>
       </main>
     </>

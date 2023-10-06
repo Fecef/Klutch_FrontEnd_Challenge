@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 
 import TableSelectBtn from "../tableSelectBtn";
 import TableSelectResult from "../tableSelectResult";
-import { LoanSimulationContext } from "@/contexts";
+import { LoanSimulationContext } from "@/contexts/loanSimulation.context";
 import { CastBRL } from "@/utils/castBrl";
 
 
-export default function TableFees(props: { hasButton?: boolean }) {
-  const { hiddenTables, tablesList } = useContext(LoanSimulationContext);
+export default function TableFees(props: ITable) {
+  const { hiddenTables } = useContext(LoanSimulationContext);
   const [highlightedRow, setHighlightedRow] = useState(-1);
   const [highlightedTable, setHighlightedTable] = useState("")
   const [field, setField] = useState<IHighlitedField>({} as IHighlitedField)
@@ -24,9 +24,9 @@ export default function TableFees(props: { hasButton?: boolean }) {
   }
 
   return (
-    <section className="pb-56 w-[120rem] mx-auto" hidden={hiddenTables}>
-      {tablesList.map((table, i) => (
-        <div key={i} className="flex">
+    <section className="pb-56 w-[120rem] mx-auto" hidden={props.alwaysShow ? false : hiddenTables}>
+      {props.tablesList.map((table) => (
+        <div key={table.id} className="flex">
           {props.hasButton && <TableSelectBtn highlightedTable={highlightedTable === table.tableName} />}
 
           <table className="border border-t-0 border-[#e5e5e5] w-full">
@@ -47,12 +47,12 @@ export default function TableFees(props: { hasButton?: boolean }) {
             <tbody className="text-center text-font text-1 cursor-pointer">
               {table.installments.map((row, j) => (
                 <tr
-                  key={i}
+                  key={j}
                   className={highlightedRow === j && highlightedTable === table.tableName ? "bg-[#efdf484d]" : ""}
                   onMouseDown={() => handleClick(j, table.tableName, row)}
                 >
                   <td className="py-8 border border-[#e5e5e5]">{row.installment}</td>
-                  <td className="py-8 border border-[#e5e5e5]">{row.installmentFee * 100 + "%"}</td>
+                  <td className="py-8 border border-[#e5e5e5]">{row.installmentFee + "%"}</td>
                   <td className="py-8 border border-[#e5e5e5]">{CastBRL(row.installmentTotalValue)}</td>
                   <td className="py-8 border border-[#e5e5e5]">{CastBRL(row.loanTotalValue)}</td>
                   <td className="py-8 border border-[#e5e5e5]">{CastBRL(row.comissionPartner)}</td>
@@ -63,7 +63,9 @@ export default function TableFees(props: { hasButton?: boolean }) {
         </div>
       ))}
 
-      <TableSelectResult field={field} />
+      <div hidden={!props.hasFooter}>
+        <TableSelectResult field={field} />
+      </div>
     </section>
   );
 }

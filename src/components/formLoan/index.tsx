@@ -3,7 +3,7 @@ import IconCheck from "../icons/iconCheck";
 import { useContext, useState } from "react";
 import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
 import { useForm } from "react-hook-form";
-import { LoanSimulationContext } from "@/contexts/loanSimulation.context";
+import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
 import { CastBRL } from "@/utils/castBrl";
 
 export default function FormLoan() {

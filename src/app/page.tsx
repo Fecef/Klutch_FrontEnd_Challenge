@@ -5,7 +5,7 @@ import TableFees from "../components/tableFees";
 import Header from "../components/header";
 import PageTitle from "../components/pageTitle";
 import { useContext } from "react";
-import { LoanSimulationContext } from "@/contexts/loanSimulation.context";
+import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
 
 export default function Home() {
   const { tablesList } = useContext(LoanSimulationContext)

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 
 import Header from "@/components/header";
@@ -5,8 +7,13 @@ import IconCard from "@/components/icons/iconCard";
 import IconCircleCheck from "@/components/icons/iconCircleCheck";
 import IconDocument from "@/components/icons/iconDocument";
 import PageTitle from "@/components/pageTitle";
+import { useContext } from "react";
+import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
+import { currentDate } from "@/utils/currentDate";
 
 export default function LoandDetails() {
+  const { cardData, clientData, loanData } = useContext(LoanApplicationContext);
+
   return (
     <>
       <Header />
@@ -28,14 +35,14 @@ export default function LoandDetails() {
               <div className="w-[27rem] h-[28rem] flex flex-col gap-12 items-center p-6 bg-backGround rounded-lg">
                 <p className="text-3 text-font">Valor Total</p>
                 <p className="text-[3.6rem] text-[#31ac2b] font-bold">
-                  R$ 6.000,00
+                  {loanData?.loanValue}
                 </p>
               </div>
 
               <div className="w-[27rem] h-[28rem] flex flex-col gap-12 items-center p-6 bg-backGround rounded-lg">
                 <p className="text-3 text-font">Valor a Depositar</p>
                 <p className="text-[3.6rem] text-[#31ac2b] font-bold">
-                  R$ 6.000,00
+                  {loanData?.loanTotalValue}
                 </p>
               </div>
             </div>
@@ -73,7 +80,7 @@ export default function LoandDetails() {
             <div className="p-6 bg-backGround rounded-lg">
               <p className="text-3 text-font">
                 Fluxo da Solicitação:{" "}
-                <span className="text-2 text-primary1 font-bold">Manual</span>
+                <span className="text-2 text-primary1 font-bold">{loanData?.stream}</span>
               </p>
             </div>
 
@@ -87,31 +94,31 @@ export default function LoandDetails() {
                 <IconCard fill="#ef9c4b" />
               </div>
 
-              <p>Número do cartão: 5252 0565 6526 6552</p>
+              <p>Número do cartão: {cardData?.number}</p>
 
               <div className="flex gap-20">
-                <p>Validade: 03/27</p>
-                <p>CVC: 254</p>
+                <p>Validade: {cardData?.validity}</p>
+                <p>CVC: {cardData?.cvc}</p>
               </div>
 
               <p>
                 1 parcelas de:{" "}
-                <span className="text-[#31ac2b]">R$ 2.000,00</span>
+                <span className="text-[#31ac2b]">{loanData?.installmentTotalValue}</span>
               </p>
 
-              <p>Tabela: Tabela padrão</p>
+              <p>Tabela: {loanData?.tableName}</p>
             </div>
 
             <div className="w-full h-[33rem] flex flex-col gap-4 p-8 bg-backGround rounded-lg text-font text-1 font-bold italic">
               <p className="text-[2rem] not-italic font-normal">
                 Informações do Cliente
               </p>
-              <p>Nome: Lara B Esquível</p>
-              <p>CPF: 866.666.965-87</p>
-              <p>Agência: 1235</p>
-              <p>Banco: 029 - Banco Itaú Consignado S.A.</p>
-              <p>Tipo de Conta: Popança</p>
-              <p>Número da conta: 222245</p>
+              <p>Nome: {clientData?.name}</p>
+              <p>CPF: {clientData?.cpf}</p>
+              <p>Agência: {clientData?.bank.agency}</p>
+              <p>Banco: {clientData?.bank.name}</p>
+              <p>Tipo de Conta: {clientData?.bank.type}</p>
+              <p>Número da conta: {clientData?.bank.number}</p>
             </div>
 
             <div className="w-full h-[27rem] flex flex-col items-center gap-8 p-8 bg-[#e8f3f4] border border-dashed border-[#187680] rounded-lg text-font text-1 font-bold italic">
@@ -119,7 +126,7 @@ export default function LoandDetails() {
                 Informações Gerais:
               </p>
 
-              <p className="text-[2rem]">Data: 09/03/2020</p>
+              <p className="text-[2rem]">Data: {currentDate()}</p>
 
               <div className="status-tag status-waiting">
                 <IconCircleCheck fill="#fff" />

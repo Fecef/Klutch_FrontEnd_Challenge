@@ -35,6 +35,10 @@ body {
     @apply bg-secondary1 hover:bg-secondary2;
   }
 
+  .btn-whiteFixed {
+    @apply bg-whiteFixed text-primary1;
+  }
+
   .status-tag {
     @apply w-[28rem] flex justify-center items-center gap-6 py-4 text-whiteFixed rounded-lg;
   }

@@ -1,8 +1,17 @@
 import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+
+import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
 
 export default function FormCreditCard() {
+  const { stepFoward, saveCardData } = useContext(LoanApplicationContext)
+  const { register, handleSubmit } = useForm<ICreditCard>();
+  const formSubmit = (data: ICreditCard) => saveCardData(data);
+  ;
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(formSubmit)}>
       {/*  Lado esquerdo */}
       <div className="flex gap-20 mx-auto">
         <section className="w-full flex flex-col gap-8">
@@ -16,6 +25,7 @@ export default function FormCreditCard() {
               type="text"
               placeholder="Nome no Cartão"
               autoComplete="off"
+              {...register("owner")}
             />
           </div>
 
@@ -25,6 +35,7 @@ export default function FormCreditCard() {
               type="text"
               placeholder="0000000000000000"
               autoComplete="off"
+              {...register("number")}
             />
 
             <span className="absolute right-5">
@@ -43,6 +54,7 @@ export default function FormCreditCard() {
               type="text"
               placeholder="Data de Validade"
               autoComplete="off"
+              {...register("validity")}
             />
           </div>
 
@@ -52,6 +64,7 @@ export default function FormCreditCard() {
               type="text"
               placeholder="CVC"
               autoComplete="off"
+              {...register("cvc")}
             />
           </div>
         </section>
@@ -110,7 +123,7 @@ export default function FormCreditCard() {
         </section>
       </div>
 
-      <button className="btn btn-lg btn-primary mx-auto my-24" type="submit">
+      <button onClick={stepFoward} className="btn btn-lg btn-primary mx-auto my-24" type="submit">
         Continuar
       </button>
     </form>

@@ -1,18 +1,18 @@
 import { useContext, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import CurrencyInput from "react-currency-input-field";
 
 import IconCheck from "../icons/iconCheck";
 import { LoanApplicationContext } from "@/contexts/loanApplication.context";
 import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
-import CurrencyInput from "react-currency-input-field";
 import Table from "../table";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaSolicitation } from "./schema";
 
 export default function FormLoan() {
   const { saveLoanData } = useContext(LoanApplicationContext)
-  const { desiredValue, table, tableList, handleDesiredValue, handleTableSelect, handleLoanInstallments } = useContext(LoanSimulationContext)
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<ILoan>({ resolver: yupResolver(schemaSolicitation) })
+  const { desiredValue, table, tableList, installments, handleDesiredValue, handleTableSelect, handleLoanInstallments } = useContext(LoanSimulationContext)
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<ILoanForm>({ resolver: yupResolver(schemaSolicitation) })
 
   const [selected, setSelected] = useState(false)
   const [modality, setModality] = useState("Automático")
@@ -27,7 +27,7 @@ export default function FormLoan() {
     setSelected(!selected)
   }
 
-  const formSubmit = (data: ILoan) => {
+  const formSubmit = (data: any) => {
     data.tableName = table!.tableName
     data.tableRate = table!.tableRate
     data.tableRateId = table!.id
@@ -72,7 +72,7 @@ export default function FormLoan() {
               autoComplete="off"
               placeholder="1"
               min={1}
-              max={10}
+              max={installments.length}
               onKeyDown={(e) => e.preventDefault()}
               {...register("installments", {
                 onChange: (e) => handleLoanInstallments(e.target.value)

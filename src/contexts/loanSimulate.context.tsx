@@ -104,6 +104,7 @@ export function LoanSimulationProvider({ children }: { children: React.ReactNode
         handleDesiredValue,
         handleTableSelect,
         handleLoanInstallments,
+        installments,
         desiredValue,
         tableName,
         tableRateList,

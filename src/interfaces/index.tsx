@@ -2,6 +2,7 @@ interface ILoanSimulationProvider {
   handleDesiredValue: (value: string) => void;
   handleTableSelect: (tableName: string) => void;
   handleLoanInstallments: (loanInstallments: number) => void;
+  installments: number[];
   desiredValue: number;
   tableName: string;
   tableRateList: ITableRate[];
@@ -45,6 +46,13 @@ interface ILoan {
   loanValue: string;
   loanTotalValue: string;
   stream: string;
+}
+
+
+interface ILoanForm {
+  tableName: string;
+  installments: number;
+  loanValue: string;
 }
 
 interface IBank {

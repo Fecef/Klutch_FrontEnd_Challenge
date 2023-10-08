@@ -2,17 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-size: 10px;
-}
-
-body {
-  font-size: 1.6rem;
-}
-
 @layer components {
+  .remove-arrow::-webkit-inner-spin-button,
+  .remove-arrow::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .remove-arrow {
+    -moz-appearance: textfield;
+  }
+
+  .input-search {
+    @apply bg-backGround text-font text-4 font-medium rounded-lg px-8 py-4 focus:outline-none;
+  }
+
   .input-creditCard {
-    @apply w-full bg-backGround text-[1.8rem] text-font font-bold italic rounded-l-lg p-8 focus:outline-none;
+    @apply w-full bg-backGround text-[1.8rem] text-font font-bold italic rounded-lg p-8 focus:outline outline-secondary1;
+  }
+
+  .input-loan {
+    @apply text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none
+  }
+
+  .label-loan {
+    @apply flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg
   }
 
   .btn {

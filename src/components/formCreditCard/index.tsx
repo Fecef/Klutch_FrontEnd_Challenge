@@ -1,14 +1,21 @@
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
+import InputMask from 'react-input-mask';
 
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
 
 export default function FormCreditCard() {
-  const { stepFoward, saveCardData } = useContext(LoanApplicationContext)
-  const { register, handleSubmit } = useForm<ICreditCard>();
-  const formSubmit = (data: ICreditCard) => saveCardData(data);
-  ;
+  const { stepFoward, saveCardData } = useContext(LoanApplicationContext);
+  const { register, handleSubmit, setValue } = useForm<ICreditCard>();
+
+  const inputNumbers = /[^A-Za-z\s\W]/g
+  const removeNumbers = (input: string) => input.replace(inputNumbers, "")
+
+  const formSubmit = (data: ICreditCard) => {
+    saveCardData(data)
+    stepFoward()
+  };
 
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
@@ -20,21 +27,29 @@ export default function FormCreditCard() {
           </p>
 
           <div className="flex items-center relative">
+            <label htmlFor="owner" hidden>Titular da Conta</label>
             <input
               className="input-creditCard"
               type="text"
-              placeholder="Nome no Cartão"
+              placeholder="Titular da Conta"
               autoComplete="off"
-              {...register("owner")}
+              required
+              {...register("owner", {
+                onChange: (e) => setValue("owner", removeNumbers(e.target.value))
+              })}
             />
           </div>
 
           <div className="flex items-center relative">
-            <input
+            <label htmlFor="cardNumber" hidden>Número do Cartão</label>
+            <InputMask
               className="input-creditCard"
-              type="text"
-              placeholder="0000000000000000"
+              id="cardNumber"
+              mask="9999 9999 9999 9999"
+              placeholder="Número do Cartão"
               autoComplete="off"
+              required
+              maskChar=""
               {...register("number")}
             />
 
@@ -49,21 +64,28 @@ export default function FormCreditCard() {
           </div>
 
           <div className="flex items-center relative">
-            <input
+            <label htmlFor="validity" hidden>Data de Validade</label>
+            <InputMask
               className="input-creditCard"
-              type="text"
+              id="validity"
+              mask="99/99"
               placeholder="Data de Validade"
               autoComplete="off"
+              required
               {...register("validity")}
             />
           </div>
 
           <div className="flex items-center relative">
-            <input
+            <label htmlFor="cvc" hidden>CVC</label>
+            <InputMask
               className="input-creditCard"
-              type="text"
+              id="cvc"
+              mask="9999"
               placeholder="CVC"
               autoComplete="off"
+              required
+              maskChar=""
               {...register("cvc")}
             />
           </div>
@@ -123,7 +145,7 @@ export default function FormCreditCard() {
         </section>
       </div>
 
-      <button onClick={stepFoward} className="btn btn-lg btn-primary mx-auto my-24" type="submit">
+      <button className="btn btn-lg btn-primary mx-auto my-24" type="submit">
         Continuar
       </button>
     </form>

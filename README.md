@@ -6,7 +6,7 @@
 
 ### Passo-a-passo
 
-1. Instalar os pacotes necessário.
+1. Instalar os pacotes necessários.
 ```
 npm install
 ```

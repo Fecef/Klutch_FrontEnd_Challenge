@@ -1,20 +1,27 @@
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
 import { useContext } from "react";
 
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
+
 export default function LoanChoices() {
-  const { stepFoward } = useContext(LoanApplicationContext)
+  const { stepFoward, cardData } = useContext(LoanApplicationContext)
+
+  const handleClick = (e: any) => {
+    cardData!.modality = e.target.textContent
+    stepFoward()
+  }
+
   return (
     <div className="flex flex-col items-center gap-12">
       <h2 className="text-5 text-primary1">Escolha a modalidade:</h2>
 
-      <button onClick={stepFoward} className="btn btn-lg btn-primary" type="submit">
+      <button onClick={handleClick} className="btn btn-lg btn-primary">
         Cartão de Crédito
       </button>
 
       <span className="text-5 text-font">Ou</span>
 
       <div className="flex flex-col">
-        <button className="btn btn-lg btn-primary" disabled>
+        <button onClick={handleClick} className="btn btn-lg btn-primary" disabled>
           Cartão Consignado
         </button>
 

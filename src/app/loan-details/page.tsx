@@ -8,8 +8,9 @@ import IconCircleCheck from "@/components/icons/iconCircleCheck";
 import IconDocument from "@/components/icons/iconDocument";
 import PageTitle from "@/components/pageTitle";
 import { useContext } from "react";
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
-import { currentDate } from "@/utils/currentDate";
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
+import getCurrentDate from "@/utils/getCurrentDate";
+import formatterCpf from "@/utils/formatterCpf";
 
 export default function LoandDetails() {
   const { cardData, clientData, loanData } = useContext(LoanApplicationContext);
@@ -114,7 +115,7 @@ export default function LoandDetails() {
                 Informações do Cliente
               </p>
               <p>Nome: {clientData?.name}</p>
-              <p>CPF: {clientData?.cpf}</p>
+              <p>CPF: {formatterCpf(clientData?.cpf)}</p>
               <p>Agência: {clientData?.bank.agency}</p>
               <p>Banco: {clientData?.bank.name}</p>
               <p>Tipo de Conta: {clientData?.bank.type}</p>
@@ -126,7 +127,7 @@ export default function LoandDetails() {
                 Informações Gerais:
               </p>
 
-              <p className="text-[2rem]">Data: {currentDate()}</p>
+              <p className="text-[2rem]">Data: {getCurrentDate()}</p>
 
               <div className="status-tag status-waiting">
                 <IconCircleCheck fill="#fff" />

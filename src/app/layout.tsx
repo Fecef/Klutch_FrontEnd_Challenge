@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-br">
-      <body className={inter.className}>
+    <html className="text-[10px]" lang="pt-br">
+      <body className={`${inter.className} text-[1.6rem]`} suppressHydrationWarning={true}>
         <ProviderCollection>
           {children}
         </ProviderCollection>

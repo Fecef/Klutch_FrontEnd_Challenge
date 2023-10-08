@@ -2,8 +2,8 @@ export default function IconCircleAlert(props: any) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24.183"
-      height="24.183"
+      width="24"
+      height="24"
       viewBox="0 0 24.183 24.183"
       {...props}
     >

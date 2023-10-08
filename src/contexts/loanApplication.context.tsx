@@ -9,7 +9,6 @@ export function LoanApplicationProvider({ children }: { children: React.ReactNod
     const [clientData, setClientData] = useState<IClient>()
     const [cardData, setCardData] = useState<ICreditCard>()
     const [loanData, setLoanData] = useState<ILoan>()
-    const [loanDetail, setLoanDetail] = useState()
     const [requestSolicitation, setRequestSolicitation] = useState(false)
     const [step, setStep] = useState(1)
     const stepFoward = () => setStep(step + 1)
@@ -37,19 +36,18 @@ export function LoanApplicationProvider({ children }: { children: React.ReactNod
             if (!loanData) return
 
             const data = {
-                installments: loanData?.installments,
-                installment_value: convertCurrencyToNumber(loanData?.installmentTotalValue),
-                loan_to_get: convertCurrencyToNumber(loanData?.loanValue),
-                loan_to_pay: convertCurrencyToNumber(loanData?.loanTotalValue),
-                stream: loanData?.stream,
+                installments: loanData.installments,
+                installment_value: convertCurrencyToNumber(loanData.installmentTotalValue),
+                loan_to_get: convertCurrencyToNumber(loanData.loanValue),
+                loan_to_pay: convertCurrencyToNumber(loanData.loanTotalValue),
+                stream: loanData.stream,
                 modality: cardData?.modality,
                 client: clientData?.id,
-                rate_table: loanData?.tableRateId,
+                rate_table: loanData.tableRateId,
             }
 
             try {
-                const res = await api.post("/solicitation/", data)
-                setLoanDetail(res.data)
+                await api.post("/solicitation/", data)
                 stepFoward()
             } catch (error) {
                 console.log("Solicitation with this client already exists.");

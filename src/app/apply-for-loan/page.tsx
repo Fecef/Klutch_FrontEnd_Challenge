@@ -2,6 +2,7 @@
 
 import { useContext } from "react";
 
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
 import FormCreditCard from "@/components/formCreditCard";
 import FormLoan from "@/components/formLoan";
 import FormSearchClient from "@/components/formSearchClient";
@@ -10,7 +11,6 @@ import LoanChoices from "@/components/loanChoices";
 import LoanSummary from "@/components/loanSummary";
 import PageTitle from "@/components/pageTitle";
 import SearchClientResult from "@/components/searchClientResult";
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
 
 export default function ApplyForLoan() {
   const { step } = useContext(LoanApplicationContext)

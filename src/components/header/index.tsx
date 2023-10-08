@@ -1,18 +1,14 @@
-import Image from "next/image";
+import IconHambMenu from "../icons/iconHambMenu/indes";
+import IconKlutchLogo from "../icons/iconKlutchLogo";
 
 export default function Header() {
   return (
     <header className="flex justify-between bg-primary1 px-4 py-4">
       <div className="cursor-pointer">
-        <Image
-          src="/icons8-hamburger-menu.svg"
-          width={35}
-          height={0}
-          alt="Menu"
-        />
+        <IconHambMenu />
       </div>
 
-      <Image src="/Grupo 290.svg" width={150} height={0} alt="Logo" />
+      <IconKlutchLogo />
       <div></div>
     </header>
   );

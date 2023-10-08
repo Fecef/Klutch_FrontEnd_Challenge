@@ -1,15 +1,12 @@
-interface IProviderProps {
-  children: React.ReactNode;
-}
-
 interface ILoanSimulationProvider {
-  handleDesiredValue: (data: number) => void;
-  buildTablesList: () => void;
-  changeTableDefault: (tableName: string) => void;
+  handleDesiredValue: (value: string) => void;
+  handleTableSelect: (tableName: string) => void;
+  handleLoanInstallments: (loanInstallments: number) => void;
   desiredValue: number;
-  hiddenTables: boolean;
-  tablesList: ITablesList[];
-  tableDefault: ITablesList[];
+  tableName: string;
+  tableRateList: ITableRate[];
+  tableList: ITable[];
+  table: ITable | undefined;
 }
 
 interface ILoanApplicationProvider {
@@ -31,25 +28,23 @@ interface IClient {
   bank: IBank;
 }
 
-interface ISearchCpf {
-  cpf: string;
-}
-
 interface ICreditCard {
   owner: string;
   number: string;
   validity: string;
   cvc: string;
+  modality: string;
 }
 
 interface ILoan {
+  tableRate?: number;
+  tableRateId?: string;
   tableName: string;
-  tableRate: number;
   installments: number;
-  installmentTotalValue: number;
-  loanValue: number;
-  loanTotalValue: number;
-  stream: string;
+  installmentTotalValue?: string;
+  loanValue: string;
+  loanTotalValue?: string;
+  stream?: string;
 }
 
 interface IBank {
@@ -67,34 +62,27 @@ interface ITableRate {
   partner_comission: number;
 }
 
-interface ITablesList {
+interface ITable {
   id: string;
   tableName: string;
   tableRate: number;
   installments: IInstallments[];
 }
 
-interface ITable {
-  tablesList: ITablesList[];
-  alwaysShow?: boolean;
-  hasButton?: boolean;
-  hasFooter?: boolean;
-}
-
 interface IInstallments {
   installment: number;
-  installmentFee: number;
-  installmentTotalValue: number;
-  loanTotalValue: number;
-  comissionPartner: number;
+  installmentFee: string;
+  installmentTotalValue: string;
+  loanTotalValue: string;
+  comissionPartner: string;
 }
 
-interface IHighlitedField {
+interface ISelectedRow {
   tableName: string;
   installment: number;
   installmentTotalValue: string;
 }
-
-interface IFeeCalc {
-  value: string;
+interface IPageTitle {
+  text: string;
+  hasIcon?: boolean;
 }

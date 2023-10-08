@@ -1,53 +1,42 @@
-import TableFees from "../tableFees";
-import IconCheck from "../icons/iconCheck";
 import { useContext, useState } from "react";
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+
+import IconCheck from "../icons/iconCheck";
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
 import { LoanSimulationContext } from "@/contexts/loanSimulate.context";
-import { CastBRL } from "@/utils/castBrl";
+import CurrencyInput from "react-currency-input-field";
+import Table from "../table";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaSolicitation } from "./schema";
 
 export default function FormLoan() {
-  const { stepFoward, saveLoanData, loanData } = useContext(LoanApplicationContext)
-  const { tablesList, tableDefault, desiredValue, handleDesiredValue, changeTableDefault } = useContext(LoanSimulationContext)
-  const { register, handleSubmit } = useForm<ILoan>();
+  const { saveLoanData } = useContext(LoanApplicationContext)
+  const { desiredValue, table, tableList, handleDesiredValue, handleTableSelect, handleLoanInstallments } = useContext(LoanSimulationContext)
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<ILoan>({ resolver: yupResolver(schemaSolicitation) })
+
   const [selected, setSelected] = useState(false)
+  const [modality, setModality] = useState("Automático")
 
-  const [streamType, setStreamType] = useState("");
-  const [installments, setInstallments] = useState(0);
-  const [loanTotalValue, setLoanTotalValue] = useState(0);
-  const [installmentTotalValue, setInstallmentTotalValue] = useState("");
+  const installment = getValues("installments")
+  const installmentTotalValue = table?.installments[installment - 1].installmentTotalValue
+  const loanTotalValue = table?.installments[installment - 1].loanTotalValue
 
-
-  const formSubmit = (data: ILoan) => {
-    data.stream = streamType
-    data.tableRate = tableDefault[0].tableRate;
-    saveLoanData(data)
-  };
-
+  const handleSelect = (tableName: string) => handleTableSelect(tableName)
   const handleClick = (streamType: string) => {
-    setStreamType(streamType)
+    setModality(streamType)
     setSelected(!selected)
   }
 
-  const handleSelect = (i: number) => {
-    changeTableDefault(tablesList[i].tableName)
+  const formSubmit = (data: ILoan) => {
+    data.tableName = table!.tableName
+    data.tableRate = table!.tableRate
+    data.tableRateId = table!.id
+    data.stream = modality
+    data.installmentTotalValue = installmentTotalValue
+    data.loanTotalValue = loanTotalValue
+
+    saveLoanData(data);
   }
-
-  const calcLoanTotalValue = () => {
-    // jurosParcela = jurosTabela * qtdeParcelas
-    // valorDaParcela = (valorDesjado / qtdeParcelas ) * jurosParcela
-    // const feeRate = +loanData!.tableRate * installments
-  }
-
-  const calcInstallmentTotalValue = () => {
-    const installmenteFee = tableDefault[0].tableRate * installments;
-    const installmentValue = desiredValue / installments
-    const installmentTotalValue = (installmentValue * installmenteFee) + installmentValue
-
-    // setInstallmentTotalValue(CastBRL(installmentTotalValue))
-    return CastBRL(installmentTotalValue)
-  }
-
 
   return (
     <>
@@ -56,39 +45,45 @@ export default function FormLoan() {
         className="w-[130rem] flex justify-center gap-10 mb-24"
       >
         <div className="w-[59rem] flex flex-col gap-10">
-          <label className="flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg bg-[#e8ffe3]">
+          <label className="label-loan bg-[#e8ffe3]">
             Valor desejado:
-            <input
-              className="w-[45%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none"
-              type="text"
+            <CurrencyInput
+              className="w-[45%] input-loan"
+              defaultValue={desiredValue}
+              placeholder="R$ 0,00"
               autoComplete="off"
-              placeholder="R$0,00"
+              type="text"
+              id="desiredValue"
+              prefix="R$ "
+              allowNegativeValue={false}
               {...register("loanValue", {
-                onChange: (e) => handleDesiredValue(e.target.value)
+                onChange: (e) => handleDesiredValue(e.target.value || "0")
               })}
             />
           </label>
+          <h1>{errors.loanValue?.message}</h1>
 
-          <label className="flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg bg-backGround">
+          <label className="label-loan bg-backGround">
             Parcelas:
             <input
-              className="w-[45%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none"
+              className="w-[45%] input-loan"
+              defaultValue={1}
               type="number"
               autoComplete="off"
-              placeholder="0"
+              placeholder="1"
+              min={1}
+              max={10}
+              onKeyDown={(e) => e.preventDefault()}
               {...register("installments", {
-                onChange: (e) => setInstallments(e.target.value)
+                onChange: (e) => handleLoanInstallments(e.target.value)
               })}
             />
           </label>
-
-          <p className="text-primary1 text-1">Escolha o tipo de contrato:</p>
 
           <div className="flex w-[59rem]">
             <button
               onClick={() => handleClick("Automático")}
-              className={`btn btn-lg ${selected ? "btn-whiteFixed" : "btn-primary"
-                }`}
+              className={`${selected ? "btn-whiteFixed" : "btn-primary"} btn btn-lg`}
               type="button"
             >
               Automático
@@ -96,8 +91,7 @@ export default function FormLoan() {
 
             <button
               onClick={() => handleClick("Manual")}
-              className={`btn btn-lg ${selected ? "btn-primary" : "btn-whiteFixed"
-                }`}
+              className={`${selected ? "btn-primary" : "btn-whiteFixed"} btn btn-lg`}
               type="button"
             >
               Manual
@@ -107,57 +101,55 @@ export default function FormLoan() {
 
         <div className="w-[59rem] flex flex-col justify-between gap-10">
           <div className="flex flex-col gap-10">
-            <label className="flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg bg-[#e8ffe3]">
+            <label className="label-loan bg-[#e8ffe3]">
               Valor Total do Empréstimo:
               <input
-                className="w-[45%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none"
+                className="w-[45%] input-loan"
                 type="text"
                 autoComplete="off"
                 placeholder="R$ 0,00"
-                value={loanTotalValue}
-                {...register("loanTotalValue")}
+                value={loanTotalValue || ""}
+                readOnly
               />
             </label>
 
-            <label className="flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg bg-backGround">
+            <label className="label-loan bg-backGround">
               Valor da parcela:
               <input
-                className="w-[45%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none"
+                className="w-[45%] input-loan"
                 type="text"
                 autoComplete="off"
                 placeholder="R$0,00"
-                value={installmentTotalValue}
-                {...register("installmentTotalValue")}
+                value={installmentTotalValue || ""}
+                readOnly
               />
             </label>
           </div>
 
-          <label className="absolute translate-y-[-20rem] w-[45rem] flex items-center justify-between self-end p-6 text-primary1 text-1 font-bold italic rounded-lg bg-backGround">
+          <label className={`${errors.tableName ? "bg-black" : ""} absolute translate-y-[-20rem] w-[45rem] self-end label-loan bg-backGround`}>
             Tabela:
             <select
-              className="w-[65%] bg-whiteFixed text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none"
+              className="w-[65%] input-loan bg-whiteFixed disabled:opacity-40"
+              disabled={desiredValue === 0}
               {...register("tableName")}
             >
-              {tablesList.map((table, i) => (
-                <option
-                  onClick={() => handleSelect(i)}
-                  key={i}
-                  value={table.tableName}
-                >
+              <option value="">Selecionar</option>
+              {tableList.map((table, i) => (
+                <option onClick={(e: any) => handleSelect(e.target.textContent)} key={i} value={table.tableName}>
                   {table.tableName}
                 </option>
               ))}
             </select>
           </label>
 
-          <button onClick={stepFoward} className="btn btn-lg btn-primary w-full" type="submit">
+          <button className="btn btn-lg btn-primary w-full" type="submit">
             <IconCheck fill="#fff" />
             Concluir
           </button>
         </div>
-      </form>
+      </form >
 
-      <TableFees tablesList={tableDefault} />
+      <Table />
     </>
   );
 }

@@ -2,8 +2,8 @@ export default function IconDocument(props: any) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="104.243"
-      height="137.157"
+      width="104"
+      height="134"
       viewBox="0 0 104.243 137.157"
       {...props}
     >

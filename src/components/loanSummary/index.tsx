@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import IconCard from "../icons/iconCard";
 import SummaryField from "../summaryField";
-import { LoanApplicationContext } from "@/contexts/loanApplication.contex";
+import { LoanApplicationContext } from "@/contexts/loanApplication.context";
 import Link from "next/link";
+import formatterPhone from "@/utils/formatterPhone";
 
 export default function LoanSummary() {
   const { cardData, clientData, loanData } = useContext(LoanApplicationContext)
@@ -17,7 +18,7 @@ export default function LoanSummary() {
       <div className="flex gap-8">
         <SummaryField>
           <p>{cardData?.owner}</p>
-          <p>{clientData?.phone}</p>
+          <p>{formatterPhone(clientData?.phone)}</p>
         </SummaryField>
 
         <SummaryField>

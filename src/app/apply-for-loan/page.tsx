@@ -27,19 +27,19 @@ export default function ApplyForLoan() {
             <SearchClientResult />
           </div>
 
-          <div hidden={step !== 2}>
+          <div className="animate__animated animate_faster animate__fadeInRight" hidden={step !== 2}>
             <FormCreditCard />
           </div>
 
-          <div hidden={step !== 3}>
+          <div className="animate__animated animate_faster animate__fadeInRight" hidden={step !== 3}>
             <LoanChoices />
           </div>
 
-          <div hidden={step !== 4}>
+          <div className="animate__animated animate_faster animate__fadeInRight" hidden={step !== 4}>
             <FormLoan />
           </div>
 
-          <div hidden={step !== 5}>
+          <div className="animate__animated animate_faster animate__fadeInRight" hidden={step !== 5}>
             <LoanSummary />
           </div>
         </section>

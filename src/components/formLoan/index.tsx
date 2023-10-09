@@ -12,7 +12,7 @@ import { schemaSolicitation } from "./schema";
 export default function FormLoan() {
   const { saveLoanData } = useContext(LoanApplicationContext)
   const { desiredValue, table, tableList, installments, handleDesiredValue, handleTableSelect, handleLoanInstallments } = useContext(LoanSimulationContext)
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<ILoanForm>({ resolver: yupResolver(schemaSolicitation) })
+  const { register, handleSubmit, getValues } = useForm<ILoanForm>({ resolver: yupResolver(schemaSolicitation) })
 
   const [selected, setSelected] = useState(false)
   const [modality, setModality] = useState("Automático")
@@ -45,7 +45,7 @@ export default function FormLoan() {
         className="w-[130rem] flex justify-center gap-10 mb-24"
       >
         <div className="w-[59rem] flex flex-col gap-10">
-          <label className="label-loan bg-[#e8ffe3]">
+          <label className="relative label-loan bg-[#e8ffe3]">
             Valor desejado:
             <CurrencyInput
               className="w-[45%] input-loan"
@@ -60,8 +60,12 @@ export default function FormLoan() {
                 onChange: (e) => handleDesiredValue(e.target.value || "0")
               })}
             />
+
+            <div className="absolute bottom-4 left-8 text-[1.8rem] text-primary2">
+              <small className="text-secondary1 font-normal"><span className="text-primary1">min:</span> R$ 301 <span className="text-primary1">max:</span> R$ 9.999</small>
+            </div>
           </label>
-          <h1>{errors.loanValue?.message}</h1>
+
 
           <label className="label-loan bg-backGround">
             Parcelas:
@@ -126,7 +130,7 @@ export default function FormLoan() {
             </label>
           </div>
 
-          <label className={`${errors.tableName ? "bg-black" : ""} absolute translate-y-[-20rem] w-[45rem] self-end label-loan bg-backGround`}>
+          <label className={"absolute translate-y-[-20rem] w-[45rem] self-end label-loan bg-backGround"}>
             Tabela:
             <select
               className="w-[65%] input-loan bg-whiteFixed disabled:opacity-40"

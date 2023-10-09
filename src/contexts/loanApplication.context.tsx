@@ -7,11 +7,12 @@ export const LoanApplicationContext = createContext<ILoanApplicationProvider>({}
 
 export function LoanApplicationProvider({ children }: { children: React.ReactNode }) {
     const [clientData, setClientData] = useState<IClient>()
+    const [clientNotFound, setClientNotFound] = useState(true)
     const [cardData, setCardData] = useState<ICreditCard>()
     const [loanData, setLoanData] = useState<ILoan>()
     const [requestSolicitation, setRequestSolicitation] = useState(false)
     const [step, setStep] = useState(1)
-    const stepFoward = () => setStep(step + 1)
+    const stepFoward = () => { setStep(step + 1) }
 
     const saveCardData = (data: ICreditCard) => setCardData(data)
     const saveLoanData = (data: ILoan) => {
@@ -21,14 +22,13 @@ export function LoanApplicationProvider({ children }: { children: React.ReactNod
 
     const getClient = async (cpf: string) => {
         const normalizedCpf = normalizeCpf(cpf)
+        const res = await api.get(`/client?cpf=${normalizedCpf}`)
 
-        try {
-            const res = await api.get(`/client?cpf=${normalizedCpf}`)
-            setClientData(res.data[0])
+        if (res.data.length) {
+            setClientNotFound(true)
+            return setClientData(res.data[0])
         }
-        catch (error) {
-            console.log(error)
-        }
+        return setClientNotFound(false)
     }
 
     useEffect(() => {
@@ -67,6 +67,7 @@ export function LoanApplicationProvider({ children }: { children: React.ReactNod
                 saveLoanData,
                 stepFoward,
                 clientData,
+                clientNotFound,
                 cardData,
                 loanData,
                 step,

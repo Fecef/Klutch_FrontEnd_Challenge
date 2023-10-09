@@ -16,6 +16,7 @@ interface ILoanApplicationProvider {
   saveLoanData: (data: ILoan) => void;
   stepFoward: () => void;
   clientData: IClient | undefined;
+  clientNotFound: boolean;
   cardData: ICreditCard | undefined;
   loanData: ILoan | undefined;
   step: number;

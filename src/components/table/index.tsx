@@ -8,7 +8,7 @@ export default function Table() {
   if (!table) return
 
   return (
-    <section className="pb-56 w-[120rem] mx-auto">
+    <section className="pb-56 w-[120rem] mx-auto animate__animated animate__faster animate__fadeInUp">
       <div className="flex">
         <table className="border border-t-0 border-[#e5e5e5] w-full">
           <caption className="py-8 bg-[#f8f8f8] border border-b-0 border-[#e5e5e5] text-primary1 text-3 font-bold">

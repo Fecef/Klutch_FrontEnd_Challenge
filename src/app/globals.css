@@ -21,11 +21,11 @@
   }
 
   .input-loan {
-    @apply text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none
+    @apply text-2 text-secondary1 font-bold italic rounded-l-lg p-8 focus:outline-none;
   }
 
   .label-loan {
-    @apply flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg
+    @apply flex items-center justify-between w-full p-6 text-primary1 text-1 font-bold italic rounded-lg;
   }
 
   .btn {
